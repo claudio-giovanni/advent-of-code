@@ -3,7 +3,7 @@ numbers = [int(number) for number in numbers]
 
 
 def count_increases(data: list[int]) -> int:
-    return sum((data[i + 1] - data[i]) > 0 for i in range(len(data) - 1))
+    return sum(data[i + 1] > data[i] for i in range(len(data) - 1))
 
 
 part_one = count_increases(numbers)

@@ -33,9 +33,9 @@ class BingoBoard:
 
 
 bingo_numbers = open("04_2.txt").read().split(",")
-board_numbers = open("04_1.txt").read().split('\n\n')
-board_numbers = [number.strip() for table in board_numbers for number in table.replace('\n', ' ').split()]
-boards = [BingoBoard(board_numbers[i * 25:(i + 1) * 25]) for i in range(len(board_numbers) // 25)]
+board_numbers = open("04_1.txt").read().split("\n\n")
+board_numbers = [number.strip() for table in board_numbers for number in table.replace("\n", " ").split()]
+boards = [BingoBoard(board_numbers[i * 25: (i + 1) * 25]) for i in range(len(board_numbers) // 25)]
 
 bingo_map = dict()
 for bingo_number in bingo_numbers:

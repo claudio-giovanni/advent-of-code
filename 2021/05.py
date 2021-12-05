@@ -55,7 +55,7 @@ class Grid:
 
 data = open("05.txt").read().splitlines()
 data = [line.split(" -> ") for line in data]
-data_lines = [[tuple(int(n) for n in line[0].split(',')), tuple(int(n) for n in line[1].split(','))] for line in data]
+data_lines = [[tuple(int(n) for n in line[0].split(",")), tuple(int(n) for n in line[1].split(","))] for line in data]
 
 lines = [Line(start=line[0], end=line[1]) for line in data_lines]
 grid = Grid(lines=lines)

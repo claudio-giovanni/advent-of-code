@@ -43,8 +43,9 @@ print("PART ONE: ", len(fish_school.fishes))
 
 # memory efficient approach to solving DAY 6
 
+
 def calculate_school_size(ages: list[int], days: int, life_span_new: int = 8, life_span_renew: int = 6) -> int:
-    fish_life_map = Counter(fish_ages)
+    fish_life_map = Counter(ages)
     for _ in range(days):
         reborn_fish = fish_life_map.get(0, 0)
         for i in range(life_span_new):

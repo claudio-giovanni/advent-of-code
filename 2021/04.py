@@ -7,7 +7,7 @@ class BingoBoard:
         self.numbers = numbers
         self.table: list[list[str]] = []
         for i in range(5):
-            self.table.append([number for number in numbers[i * 5: (i + 1) * 5]])
+            self.table.append([number for number in numbers[i * 5 : (i + 1) * 5]])
 
     def check_bingo(self, draw: str) -> Optional[int]:
         for i, row in enumerate(self.table):
@@ -35,7 +35,7 @@ class BingoBoard:
 bingo_numbers = open("04_2.txt").read().split(",")
 board_numbers = open("04_1.txt").read().split("\n\n")
 board_numbers = [number.strip() for table in board_numbers for number in table.replace("\n", " ").split()]
-boards = [BingoBoard(board_numbers[i * 25: (i + 1) * 25]) for i in range(len(board_numbers) // 25)]
+boards = [BingoBoard(board_numbers[i * 25 : (i + 1) * 25]) for i in range(len(board_numbers) // 25)]
 
 bingo_map = dict()
 for bingo_number in bingo_numbers:

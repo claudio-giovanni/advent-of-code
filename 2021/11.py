@@ -2,12 +2,16 @@ import itertools
 
 data_grid = [list(map(int, row)) for row in open("11.txt").read().splitlines()]
 
+SURROUNDING_POINTS = list(itertools.product([-1, 0, 1], [-1, 0, 1]))
+SURROUNDING_POINTS.remove((0, 0))
+
 
 class Grid:
     def __init__(self, grid_points: list[list[int]]):
         self.grid_points = grid_points
-        self.width = len(self.grid_points[0])
-        self.height = len(self.grid_points)
+        width = len(self.grid_points[0])
+        height = len(self.grid_points)
+        self.area = width * height
         self.zero_current = 0
         self.zero_counter = 0
 
@@ -28,9 +32,7 @@ class Grid:
             self.grid_points[v_index][h_index] = 0
             self.zero_counter += 1
             frozen_points.append(coordinate)
-            surrounding_points = list(itertools.product([-1, 0, 1], [-1, 0, 1]))
-            surrounding_points.remove((0, 0))
-            for h, v in surrounding_points:
+            for h, v in SURROUNDING_POINTS:
                 self._try_increment(h_index=h_index + h, v_index=v_index + v, frozen_points=frozen_points)
 
     def _try_increment(self, h_index: int, v_index: int, frozen_points: list[tuple[int, int]]):
@@ -52,6 +54,6 @@ for i in itertools.count(start=1):
     grid.increment_grid()
     if i == 100:
         print("PART ONE: ", grid.zero_counter)
-    if grid.zero_current == grid.width * grid.height:
+    if grid.zero_current == grid.area:
         print("PART TWO: ", i)
         break

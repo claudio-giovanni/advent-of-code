@@ -12,30 +12,41 @@ for row in data:
 
 
 class Map:
-    def __init__(self, steps: set[Step]):
+    def __init__(self, steps: set[Step], allow_multi_visit: bool):
         self.steps: set[Step] = steps
         self.viable_routes: list[list[Step]] = []
+        self.allow_multi_visit: bool = allow_multi_visit
         self._get_viable_routes()
 
     def _get_viable_routes(self):
         starting_steps: set[Step] = {step for step in self.steps if step.start == "start"}
         for step in starting_steps:
-            self._find_end_step(step=step, steps_available={s for s in self.steps if s.start != "start"}, step_trail=[])
+            self._find_end_step(
+                step=step,
+                steps_available={s for s in self.steps if s.start != "start"},
+                step_trail=[],
+                revisit_available=self.allow_multi_visit,
+            )
 
-    def _find_end_step(self, step: Step, steps_available: set[Step], step_trail: list[Step]) -> None:
+    def _find_end_step(self, step: Step, steps_available: set[Step], step_trail: list[Step], revisit_available: bool):
         if step.end == "end":
             step_trail.append(step)
-            self.viable_routes.append(step_trail)
-        elif next_steps := [next_step for next_step in steps_available if next_step.start == step.end]:
+            return self.viable_routes.append(step_trail)
+        if step.end.islower():
+            if not revisit_available and step.end in [next_step.end for next_step in step_trail]:
+                return
+            if revisit_available and step.end in [next_step.end for next_step in step_trail]:
+                revisit_available = False
+        if next_steps := [next_step for next_step in steps_available if next_step.start == step.end]:
             step_trail.append(step)
-            if step.end.islower():
-                steps_available = {next_step for next_step in steps_available if step.end != next_step.end}
             for next_step in next_steps:
-                self._find_end_step(step=next_step, steps_available=steps_available, step_trail=step_trail[::])
+                self._find_end_step(next_step, steps_available, step_trail[::], revisit_available)
 
     def __repr__(self):
         return f"Map(steps={self.steps})"
 
 
-m = Map(steps=steps_data)
+m = Map(steps=steps_data, allow_multi_visit=False)
 print("PART ONE: ", len(m.viable_routes))
+m = Map(steps=steps_data, allow_multi_visit=True)
+print("PART TWO: ", len(m.viable_routes))

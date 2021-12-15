@@ -16,7 +16,8 @@ def map_override(counter: Counter) -> Counter:
             for override in data_overrides[key]:
                 counter_copy[override] = counter_copy.get(override, 0) + value
             counter_copy[key] = counter_copy[key] - value
-            char_counter[data_overrides[key][0][1]] = char_counter.get(data_overrides[key][0][1], 0) + value
+            added_char = data_overrides[key][0][1]
+            char_counter[added_char] = char_counter.get(added_char, 0) + value
     return counter_copy
 
 

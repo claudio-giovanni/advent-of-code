@@ -7,7 +7,6 @@ NAUGHTY_STRINGS = ["ab", "cd", "pq", "xy"]
 
 
 class Kid:
-
     def __init__(self, name: str):
         self.name = name
 
@@ -15,7 +14,7 @@ class Kid:
         return self._check_nice_rules() and not self._check_naughty_rules()
 
     def is_nice_new(self) -> bool:
-        duplicate_pair_check = any(self.name.count(self.name[i:i + 2]) > 1 for i in range(len(self.name) - 1))
+        duplicate_pair_check = any(self.name.count(self.name[i : i + 2]) > 1 for i in range(len(self.name) - 1))
         letter_sandwich_check = any(self.name[i] == self.name[i + 2] for i in range(len(self.name) - 2))
         return duplicate_pair_check and letter_sandwich_check
 
@@ -31,4 +30,3 @@ class Kid:
 
 print(f"PART ONE: {sum(Kid(datum).is_nice_old() for datum in data)}")
 print(f"PART TWO: {sum(Kid(datum).is_nice_new() for datum in data)}")
-

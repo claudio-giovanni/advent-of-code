@@ -1,5 +1,5 @@
-from itertools import count
 import hashlib
+from itertools import count
 
 data = open("04.txt").read()
 

@@ -1,5 +1,5 @@
-from typing import Union
 from functools import lru_cache
+from typing import Union
 
 data = open("07.txt").readlines()
 

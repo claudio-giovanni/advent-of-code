@@ -11,12 +11,13 @@ class PasswordGenerator:
 
     def increment_password(self) -> str:
         self.password = self.increment_character(password=self.password)
-        while True:
-            if self.has_banned_chars() or not self.has_increasing_straight() or not self.has_multiple_pairs():
-                self.password = self.increment_character(password=self.password)
-            else:
-                break
+        while not self.is_valid_password:
+            self.password = self.increment_character(password=self.password)
         return self.password
+
+    @property
+    def is_valid_password(self) -> bool:
+        return not self.has_banned_chars() or self.has_increasing_straight() or self.has_multiple_pairs()
 
     def has_banned_chars(self) -> bool:
         return bool(set(self.password) & PasswordGenerator.BANNED_CHARS)
@@ -38,9 +39,8 @@ class PasswordGenerator:
 
     @staticmethod
     def increment_character(password: str) -> str:
-        # sourcery skip: use-fstring-for-concatenation
         if password[-1] == "z":
-            return PasswordGenerator.increment_character(password[:-1]) + "a"
+            return f'{PasswordGenerator.increment_character(password[:-1])}a'
         return password[:-1] + chr(ord(password[-1]) + 1)
 
 

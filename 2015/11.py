@@ -1,7 +1,5 @@
-import sys
 from itertools import pairwise
 
-sys.setrecursionlimit(1500)
 old_password = open("11.txt").readline()
 
 

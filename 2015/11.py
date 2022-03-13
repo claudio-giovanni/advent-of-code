@@ -40,7 +40,7 @@ class PasswordGenerator:
     @staticmethod
     def increment_character(password: str) -> str:
         if password[-1] == "z":
-            return f'{PasswordGenerator.increment_character(password[:-1])}a'
+            return f"{PasswordGenerator.increment_character(password[:-1])}a"
         return password[:-1] + chr(ord(password[-1]) + 1)
 
 

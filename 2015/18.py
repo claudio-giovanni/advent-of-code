@@ -8,7 +8,7 @@ CORNER_COORDINATES = list(itertools.product([-1, 0], repeat=2))
 
 
 class LightGrid:
-    def __init__(self, grid_data: [str], corners_always_on: bool = False):
+    def __init__(self, grid_data: list[str], corners_always_on: bool = False):
         grid_data = [list(row) for row in grid_data]
         self.grid = [[1 if value == "#" else 0 for value in row] for row in grid_data]
         self.corners_always_on = corners_always_on
@@ -38,7 +38,7 @@ class LightGrid:
         return "\n".join(str(row) for row in self.grid)
 
     @staticmethod
-    def get_on_neighbors(x: int, y: int, grid: [[int]]) -> int:
+    def get_on_neighbors(x: int, y: int, grid: list[list[int]]) -> int:
         on_neighbors = 0
         for dx, dy in COORDINATE_DISPLACEMENT:
             dx, dy = x + dx, y + dy

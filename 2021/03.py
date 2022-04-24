@@ -1,7 +1,7 @@
 data = open("03.txt").read().splitlines()
 data_length = len(data)
 data_width = len(data[0])
-data_rate_keys = [2 ** key for key in reversed(range(data_width))]
+data_rate_keys = [2**key for key in reversed(range(data_width))]
 
 
 def get_rate_map(binaries: [str]) -> {int, int}:

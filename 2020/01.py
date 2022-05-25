@@ -20,4 +20,4 @@ expense_2020_by_2 = calculator.get_target_expenses(target_sum=2020, expense_coun
 expense_2020_by_3 = calculator.get_target_expenses(target_sum=2020, expense_count=3)
 
 print(f"PART ONE: {math.prod(expense_2020_by_2)}")
-print(f"PART ONE: {math.prod(expense_2020_by_3)}")
+print(f"PART TWO: {math.prod(expense_2020_by_3)}")

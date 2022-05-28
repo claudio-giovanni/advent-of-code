@@ -29,7 +29,7 @@ def _get_template_files() -> list[TemplateFile]:
 
 def _create_files(path: Path, content: str):
     try:
-        with open(path, "x") as file:
+        with path.open("x") as file:
             file.write(content)
     except FileExistsError:
         pass

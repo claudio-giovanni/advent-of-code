@@ -1,4 +1,4 @@
-from itertools import groupby, chain
+from itertools import chain, groupby
 
 data = open("10.txt").readline()
 

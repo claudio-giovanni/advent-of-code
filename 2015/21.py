@@ -1,10 +1,10 @@
 from __future__ import annotations
-import re
 
+import re
 from dataclasses import dataclass, field
 from enum import Enum
-from itertools import product, combinations
-from typing import Generator, Optional, Union, Iterable
+from itertools import combinations, product
+from typing import Generator, Iterable, Optional, Union
 
 data = open("21.txt").read().splitlines()
 data2 = list(filter(bool, open("21_2.txt").read().splitlines()))

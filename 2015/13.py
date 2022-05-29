@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from itertools import permutations, pairwise
+from itertools import pairwise, permutations
 
 data = open("13.txt").readlines()
 

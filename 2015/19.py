@@ -1,5 +1,5 @@
-import re
 import random
+import re
 
 data = open("19.txt").read().splitlines()
 conversion_data = data[:-2]

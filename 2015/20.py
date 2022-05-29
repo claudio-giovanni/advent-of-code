@@ -1,5 +1,5 @@
 from itertools import count
-from math import sqrt, inf
+from math import inf, sqrt
 
 data = int(open("20.txt").readline())
 

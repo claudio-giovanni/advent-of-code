@@ -1,8 +1,9 @@
 import os
 from dataclasses import dataclass
-from pathlib import Path
-from itertools import product
 from datetime import datetime
+from itertools import product
+from pathlib import Path
+
 from jinja2 import Environment, FileSystemLoader, Template
 
 START_YEAR = 2015

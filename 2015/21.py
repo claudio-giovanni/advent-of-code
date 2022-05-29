@@ -73,6 +73,14 @@ class Shop:
     armor: list[Item]
     rings: list[Item]
 
+    @property
+    def armor_combinations(self) -> list[Optional[Item]]:
+        valid_combinations = [None]
+        for armor in self.armor:
+            valid_combinations.append(armor)
+        return valid_combinations
+
+    @property
     def ring_combinations(self) -> list[tuple[Optional[Item]]]:
         valid_combinations = [tuple()]
         for ring in self.rings:
@@ -82,7 +90,7 @@ class Shop:
         return valid_combinations
 
     def try_on_gear(self, character: Character) -> Generator[Character]:
-        for items in product(self.weapons, self.armor, self.ring_combinations()):
+        for items in product(self.weapons, self.armor_combinations, self.ring_combinations):
             for item in filter(bool, items):
                 character.equip_item(item=item)
             yield character

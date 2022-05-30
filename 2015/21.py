@@ -4,7 +4,7 @@ import re
 from dataclasses import dataclass, field
 from enum import Enum
 from itertools import combinations, product
-from typing import Generator, Iterable, Optional, Union
+from typing import Iterable, Optional, Union
 
 data = open("21.txt").read().splitlines()
 data2 = list(filter(bool, open("21_2.txt").read().splitlines()))
@@ -89,11 +89,11 @@ class Shop:
             valid_combinations.append(ring)
         return valid_combinations
 
-    def try_on_gear(self, character: Character) -> Generator[Character]:
+    def try_on_gear(self, character: Character):
         for items in product(self.weapons, self.armor_combinations, self.ring_combinations):
             for item in filter(bool, items):
                 character.equip_item(item=item)
-            yield character
+            yield
             for item in filter(bool, items):
                 character.unequip_item(item=item)
 
@@ -127,9 +127,9 @@ boss = DataParser.parse_character(character_data=data)
 shop = DataParser.parse_shop_items(item_data=data2)
 
 successful_build_costs = []
-for geared_adventurer in shop.try_on_gear(character=adventurer):
-    if geared_adventurer.can_beat(boss):
-        successful_build_costs.append(abs(geared_adventurer.gold))
+for _ in shop.try_on_gear(character=adventurer):
+    if adventurer.can_beat(boss):
+        successful_build_costs.append(abs(adventurer.gold))
 
 print(f"PART ONE: {min(successful_build_costs)}")
 print(f"PART TWO: {None}")

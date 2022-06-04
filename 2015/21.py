@@ -53,7 +53,8 @@ class Character:
     def equip_item(self, item: Union[Item, list[Item]]):
         if isinstance(item, Iterable):
             for individual_item in item:
-                return self.equip_item(item=individual_item)
+                self.equip_item(item=individual_item)
+            return
         self.damage += item.damage
         self.armor += item.armor
         self.gold -= item.cost
@@ -61,7 +62,8 @@ class Character:
     def unequip_item(self, item: Union[Item, Iterable[Item]]):
         if isinstance(item, Iterable):
             for individual_item in item:
-                return self.unequip_item(item=individual_item)
+                self.unequip_item(item=individual_item)
+            return
         self.damage -= item.damage
         self.armor -= item.armor
         self.gold += item.cost
@@ -130,6 +132,10 @@ successful_build_costs = []
 for _ in shop.try_on_gear(character=adventurer):
     if adventurer.can_beat(boss):
         successful_build_costs.append(abs(adventurer.gold))
-
 print(f"PART ONE: {min(successful_build_costs)}")
-print(f"PART TWO: {None}")
+
+successful_build_costs = []
+for _ in shop.try_on_gear(character=adventurer):
+    if adventurer.can_beat(boss) is False:
+        successful_build_costs.append(abs(adventurer.gold))
+print(f"PART TWO: {max(successful_build_costs)}")

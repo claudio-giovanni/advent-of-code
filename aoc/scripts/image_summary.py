@@ -68,7 +68,7 @@ class Aoc:
     def _convert_aoc_html_to_image(html: str):
         options = {
             "enable-local-file-access": None,
-            "width": 840,
+            "width": 845,
             "disable-smart-width": "",
         }
         imgkit.from_string(html, AOC_FOLDER_PATH.joinpath("summary.jpg"), options=options)

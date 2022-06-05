@@ -12,13 +12,14 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
-      - name: Git Pull
+      - name: Git pull
         uses: actions/checkout@v2
       - name: Set up Python 3.10
         uses: actions/setup-python@v2
         with:
           python-version: "3.10"
-      - uses: actions/cache@v2
+      - name: Cache dependencies
+        uses: actions/cache@v2
         with:
           path: ${{ env.pythonLocation }}
           key: requirements-${{ env.pythonLocation }}-${{ hashFiles('requirements.txt') }}
@@ -26,11 +27,6 @@ jobs:
         run: pip install -r requirements.txt
       - name: Install wkhtmltopdf
         run: sudo apt-get install xvfb libfontconfig wkhtmltopdf
-      #      - name: Install wkhtmltopdf
-      #        run: |
-      #          sudo apt-get install -y xfonts-base xfonts-75dpi
-      #          wget https://github.com/wkhtmltopdf/packaging/releases/download/0.12.6-1/wkhtmltox_0.12.6-1.bionic_amd64.deb
-      #          sudo dpkg -i wkhtmltox_0.12.6-1.bionic_amd64.deb
       - name: Create summary PNG
         run: python -m aoc.scripts.image_summary
         env:

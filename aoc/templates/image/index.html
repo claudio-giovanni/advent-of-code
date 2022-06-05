@@ -8,13 +8,20 @@
         body {
             color: #e8e6e3;
             background-color: #131516;
+            margin: 30px;
         }
+
+        h2 {
+            padding: 5px;
+            margin: 2px;
+        }
+
     </style>
     <title></title>
 </head>
 <body>
 {% for aoc_year in aoc_years %}
-    <h1>
+    <h2>
         <u>{{ aoc_year.year }}</u>
         {% for aoc_day_summary in aoc_year.summary.values() %}
             {% if aoc_day_summary == 0 %}
@@ -25,7 +32,7 @@
                 <img src="{{ static_path }}/star.png" alt="star" width="20"/>
             {% endif %}
         {% endfor %}
-    </h1>
+    </h2>
 {% endfor %}
 </body>
 </html>

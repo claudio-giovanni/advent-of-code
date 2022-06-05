@@ -55,7 +55,7 @@ class Aoc:
 
     def export_aoc_image(self, summary: list[AocYear]):
         html = self._get_aoc_html(summary=summary)
-        image = self._convert_aoc_html_to_image(html=html)
+        self._convert_aoc_html_to_image(html=html)
 
     @staticmethod
     def _get_aoc_html(summary: list[AocYear]) -> str:
@@ -69,11 +69,9 @@ class Aoc:
         options = {
             "enable-local-file-access": None,
             "width": 780,
+            "disable-smart-width": "",
         }
         imgkit.from_string(html, AOC_FOLDER_PATH.joinpath("summary.jpg"), options=options)
-
-    def _upload_aoc_image(self, s3_path: str):
-        pass
 
 
 if __name__ == "__main__":

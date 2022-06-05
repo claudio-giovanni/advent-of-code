@@ -1,31 +1,33 @@
-# [Advent Of Code](https://adventofcode.com/)
+<br>
+<div align="center">
+  <code>
+    <img height=414 src="aoc/summary.jpg" alt="img">
+  </code>
+<h2><a href="https://adventofcode.com/">Advent Of Code</a>  </h2>
+</div>
 
 ### Getting Started
 
-- install pre-commit hooks  
+- Install pre-commit hooks  
   `pre-commit install`
-- generate files for all released AOC years  
+- Setup directory structure and files for working on AOC problems  
   `python aoc`
+- OPTIONAL: Install wkhtmltopdf to generate AOC summary PNG
+- `brew install --cask wkhtmltopdf`
 
 > Below here there be dragons
 
 ```
-             /           /
-            /' .,,,,  ./
-           /';'     ,/
-          / /   ,,//,`'`
-         ( ,, '_,  ,,,' ``
-         |    /@  ,,, ;" `
-        /    .   ,''/' `,``
-       /   .     ./, `,, ` ;
-    ,./  .   ,-,',` ,,/''\,'
-   |   /; ./,,'`,,'' |   |
-   |     /   ','    /    |
-    \___/'   '     |     |
-      `,,'  |      /     `\
-           /      |        ~\
-          '       (
-         :
-        ; .         \--
-      :   \         ;
+        ,     \    /      ,  
+       / \    )\__/(     / \  
+      /   \  (_\  /_)   /   \  
+ ____/_____\__\@  @/___/_____\____
+|             |\../|              |
+|              \VV/               |
+|        Adventure Of Code        |
+|_________________________________|
+ |    /\ /      \\       \ /\    |
+ |  /   V        ))       V   \  |
+ |/     `       //        '     \|
+ `              V                '
 ```

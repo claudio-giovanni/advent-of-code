@@ -10,3 +10,6 @@ venv
 
 # OS Files
 .DS_Store
+
+# Env Confif
+.env

@@ -6,7 +6,7 @@ import imgkit
 import requests
 from jinja2 import Environment, FileSystemLoader
 
-from aoc.__main__ import AOC_FOLDER_PATH
+from aoc import AOC_FOLDER_PATH
 
 
 @dataclass

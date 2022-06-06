@@ -6,9 +6,10 @@ from pathlib import Path
 
 from jinja2 import Environment, FileSystemLoader, Template
 
+from aoc import AOC_FOLDER_PATH
+
 START_YEAR = 2015
 END_YEAR = datetime.now().year + 1
-AOC_FOLDER_PATH = Path(__file__).parent
 
 
 @dataclass

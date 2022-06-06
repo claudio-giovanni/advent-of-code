@@ -12,8 +12,6 @@
   `pre-commit install`
 - Setup directory structure and files for working on AOC problems  
   `python aoc`
-- OPTIONAL: Install wkhtmltopdf to generate AOC summary PNG
-- `brew install --cask wkhtmltopdf`
 
 > Below here there be dragons
 

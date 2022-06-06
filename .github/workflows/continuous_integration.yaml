@@ -36,5 +36,4 @@ jobs:
           git config --global user.name 'GitHub CI'
           git config --global user.email 'github.ci@github.com'
           git add aoc/summary.jpg
-          git commit -m "[Automated] summary PNG update"
-          git push
+          git diff-index --quiet HEAD || (it commit -m "[Automated] summary PNG update" && git push)

@@ -1,7 +1,7 @@
 <br>
 <div align="center">
   <code>
-    <img height=414 src="aoc/summary.jpg" alt="img">
+    <img height=345 src="aoc/summary.jpg" alt="img">
   </code>
 <h2><a href="https://adventofcode.com/">Advent Of Code</a>  </h2>
 </div>

@@ -14,9 +14,7 @@ class Password:
 
     @property
     def is_valid_at_sled_rental(self) -> bool:
-        if self.key_upper >= self.password.count(self.key) >= self.key_lower:
-            return True
-        return False
+        return self.key_upper >= self.password.count(self.key) >= self.key_lower
 
     @property
     def is_valid_at_tcp(self) -> bool:
@@ -30,8 +28,10 @@ def parse_password_from_file(password_data: list[str]) -> Iterator[Password]:
         yield Password(key=key, key_lower=int(key_lower), key_upper=int(key_upper), password=password)
 
 
-valid_passwords = sum([pwd.is_valid_at_sled_rental for pwd in parse_password_from_file(password_data=data)])
+valid_passwords = sum(pwd.is_valid_at_sled_rental for pwd in parse_password_from_file(password_data=data))
+
 print(f"PART ONE: {valid_passwords}")
 
-valid_passwords = sum([pwd.is_valid_at_tcp for pwd in parse_password_from_file(password_data=data)])
+valid_passwords = sum(pwd.is_valid_at_tcp for pwd in parse_password_from_file(password_data=data))
+
 print(f"PART TWO: {valid_passwords}")

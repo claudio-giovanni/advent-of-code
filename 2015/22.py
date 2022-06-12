@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from copy import deepcopy
 from dataclasses import dataclass, field
+from math import inf
 from typing import Callable, Iterable
 
 data = open("22.txt").read().splitlines()
@@ -34,6 +35,10 @@ class Spell:
 
 class Effect:
     @staticmethod
+    def curse(self: Character, _: Character):
+        self.hit_points -= 1
+
+    @staticmethod
     def magic_missile(_: Character, other: Character):
         other.hit_points -= 4
 
@@ -55,6 +60,7 @@ class Effect:
         self.mana += 101
 
 
+curse = Spell(name="curse", mana_cost=0, cast=Effect.curse, duration=0)
 magic_missile = Spell(name="magic_missile", mana_cost=53, cast=Effect.magic_missile, duration=0)
 drain = Spell(name="drain", mana_cost=73, cast=Effect.drain, duration=0)
 shield = Spell(name="shield", mana_cost=113, cast=Effect.shield, duration=6)
@@ -120,19 +126,23 @@ def get_spell_permutations() -> Iterable[tuple[Spell], int]:
         spells_cast = tuple(valid_permutation)
 
 
-def efficiency_battle_magic_beats_melee(wizard: Character, warrior: Character) -> int:
+def efficiency_battle_magic_beats_melee(wizard: Character, warrior: Character, limit: int | float, hard: bool) -> int:
     for spells, spells_cost in get_spell_permutations():
         temp_wizard, temp_warrior = deepcopy(wizard), deepcopy(warrior)
         for spell in spells:
             try:
+                if hard:
+                    temp_wizard.cast_spell(other=temp_warrior, spell=curse)
                 temp_wizard.resolve_eot(other=temp_warrior)
                 temp_wizard.cast_spell(other=temp_warrior, spell=spell)
+                if hard:
+                    temp_wizard.cast_spell(other=temp_warrior, spell=curse)
                 temp_wizard.resolve_eot(other=temp_warrior)
                 temp_warrior.attack_with_weapon(temp_wizard)
             except SpellFailedException:
                 break
             except CharacterDiedException:
-                if temp_warrior.is_dead and spells_cost < 1280:
+                if temp_warrior.is_dead and spells_cost < limit:
                     return spells_cost
                 break
 
@@ -140,5 +150,5 @@ def efficiency_battle_magic_beats_melee(wizard: Character, warrior: Character) -
 adventurer = Character(hit_points=50, damage=0, armor=0, mana=500)
 boss = Character.from_file(data)
 
-print(f"PART ONE: {efficiency_battle_magic_beats_melee(wizard=adventurer, warrior=boss)}")
-print(f"PART TWO: {None}")
+print(f"PART ONE: {efficiency_battle_magic_beats_melee(wizard=adventurer, warrior=boss, limit=1280, hard=False)}")
+print(f"PART TWO: {efficiency_battle_magic_beats_melee(wizard=adventurer, warrior=boss, limit=inf, hard=True)}")

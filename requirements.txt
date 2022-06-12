@@ -6,4 +6,4 @@ Jinja2==3.1.2
 matplotlib==3.5.2
 pre-commit==2.19.0
 python-dotenv==0.20.0
-requests==2.27.1
+requests==2.28.0

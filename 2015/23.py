@@ -57,15 +57,15 @@ class Instruction:
     register_name: str
     offset: int = None
 
-    @staticmethod
-    def get_instructions_from_data(instruction_data: list[str]) -> list[Instruction]:
+    @classmethod
+    def get_instructions_from_data(cls, instruction_data: list[str]) -> list[Instruction]:
         instructions = []
         for instruction in instruction_data:
             command, register_name, offset = re.findall(r"([a-z]{3}) ([a-z])?(?:, )?([+\-]\d+)?$", instruction)[0]
             command = Command[command.upper()]
             if offset:
                 offset = int(offset[1:]) if offset[0] == "+" else -int(offset[1:])
-            instructions.append(Instruction(command=command, register_name=register_name, offset=offset or None))
+            instructions.append(cls(command=command, register_name=register_name, offset=offset or None))
         return instructions
 
 

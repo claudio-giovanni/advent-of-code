@@ -39,9 +39,6 @@ class Command(Enum):
 class Register:
     value: int = field(init=False, default=0)
 
-    def execute_command(self, command: Command) -> bool:
-        return command.execute(register=self)
-
 
 @dataclass
 class Computer:
@@ -50,7 +47,7 @@ class Computer:
     def execute_instructions(self, instructions: list[Instruction], pointer: int = 0):
         for i, instruction in enumerate(instructions[pointer:], start=pointer):
             register = self.registers.setdefault(instruction.register_name, Register())
-            if register.execute_command(command=instruction.command) and instruction.offset:
+            if instruction.command.execute(register=register) and instruction.offset:
                 return self.execute_instructions(instructions=instructions, pointer=i + instruction.offset)
 
 

@@ -3,7 +3,6 @@ from __future__ import annotations
 import re
 from dataclasses import dataclass, field
 from enum import Enum, auto
-from typing import Optional
 
 data = open("23.txt").read().splitlines()
 
@@ -17,32 +16,31 @@ class Command(Enum):
     JIE = auto()
     JIO = auto()
 
-    def execute(self, register: Register) -> None:
+    def execute(self, register: Register) -> bool:
         if self == Command.HLF:
             register.value //= 2
-            register.offset = None
+            return True
         elif self == Command.TPL:
             register.value *= 3
-            register.offset = None
+            return True
         elif self == Command.INC:
             register.value += 1
-            register.offset = None
+            return True
         elif self == Command.JMP:
-            return
-        elif self == Command.JIE:
-            register.offset = register.offset if register.value % 2 == 0 else None
-        elif self == Command.JIO:
-            register.offset = register.offset if register.value == 1 else None
+            return True
+        elif self == Command.JIE and register.value % 2 == 0:
+            return True
+        elif self == Command.JIO and register.value == 1:
+            return True
+        return False
 
 
 @dataclass
 class Register:
     value: int = field(init=False, default=0)
-    offset: Optional[int] = field(init=False, default=None)
 
-    def execute_command(self, command: Command, offset: int) -> None:
-        self.offset = offset
-        command.execute(register=self)
+    def execute_command(self, command: Command) -> bool:
+        return command.execute(register=self)
 
 
 @dataclass
@@ -52,9 +50,8 @@ class Computer:
     def execute_instructions(self, instructions: list[Instruction], pointer: int = 0):
         for i, instruction in enumerate(instructions[pointer:], start=pointer):
             register = self.registers.setdefault(instruction.register_name, Register())
-            register.execute_command(command=instruction.command, offset=instruction.offset)
-            if offset := register.offset:
-                return self.execute_instructions(instructions=instructions, pointer=i + offset)
+            if register.execute_command(command=instruction.command) and instruction.offset:
+                return self.execute_instructions(instructions=instructions, pointer=i + instruction.offset)
 
 
 @dataclass

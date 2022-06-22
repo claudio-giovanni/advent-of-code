@@ -2,30 +2,51 @@ from __future__ import annotations
 
 import re
 from dataclasses import dataclass
-from typing import Callable
+from typing import TypedDict
 
 data = open("04.txt").read().split("\n\n")
 
 
-class Validation:
+class Passport(TypedDict, total=False):
+    byr: str
+    iyr: str
+    eyr: str
+    hgt: str
+    hcl: str
+    ecl: str
+    pid: str
+
+
+def get_passport_from_string(passport_data: str) -> Passport:
+    tags = re.findall(r"([a-zA-Z]{3}):([^\s\n]+)", passport_data)
+    return {tag[0]: tag[1] for tag in tags}
+
+
+@dataclass
+class EasyValidator:
     _required_tags = {"ecl", "pid", "eyr", "hcl", "byr", "iyr", "hgt"}
+
+    @classmethod
+    def validate(cls, passport: Passport) -> bool:
+        return cls._required_tags <= passport.keys()
+
+
+@dataclass
+class AdvancedValidator:
     _valid_ecl_values = ("amb", "blu", "brn", "gry", "grn", "hzl", "oth")
+    _easy_validation = EasyValidator.validate
 
-    @staticmethod
-    def easy_validation(tags: dict[str, str]) -> bool:
-        return Validation._required_tags <= tags.keys()
-
-    @staticmethod
-    def advanced_validation(tags: dict[str, str]) -> bool:
-        if not Validation.easy_validation(tags=tags):
+    @classmethod
+    def validate(cls, passport: Passport) -> bool:
+        if not cls._easy_validation(passport=passport):
             return False
-        valid_byr = 1920 <= int(tags["byr"]) <= 2002
-        valid_iyr = 2010 <= int(tags["iyr"]) <= 2020
-        valid_eyr = 2020 <= int(tags["eyr"]) <= 2030
-        valid_hgt = Validation._is_valid_hgt(hgt=tags["hgt"])
-        valid_hcl = bool(re.findall(r"#[\da-f]{6}$", tags["hcl"]))
-        valid_ecl = tags["ecl"] in Validation._valid_ecl_values
-        valid_pid = tags["pid"].isdigit() and len(tags["pid"]) == 9
+        valid_byr = 1920 <= int(passport["byr"]) <= 2002
+        valid_iyr = 2010 <= int(passport["iyr"]) <= 2020
+        valid_eyr = 2020 <= int(passport["eyr"]) <= 2030
+        valid_hgt = cls._is_valid_hgt(hgt=passport["hgt"])
+        valid_hcl = bool(re.findall(r"#[\da-f]{6}$", passport["hcl"]))
+        valid_ecl = passport["ecl"] in cls._valid_ecl_values
+        valid_pid = passport["pid"].isdigit() and len(passport["pid"]) == 9
         return all((valid_byr, valid_iyr, valid_eyr, valid_hgt, valid_hcl, valid_ecl, valid_pid))
 
     @staticmethod
@@ -37,20 +58,10 @@ class Validation:
         return False
 
 
-@dataclass
-class Passport:
-    tags: dict[str, str]
+passports = [get_passport_from_string(passport_data=datum) for datum in data]
 
-    def is_valid(self, validation: Callable[[dict[str, str]], bool]) -> bool:
-        return validation(self.tags)
+validated_passports = [EasyValidator.validate(passport=passport) for passport in passports]
+print(f"PART ONE: {sum(validated_passports)}")
 
-    @staticmethod
-    def get_passport_from_string(passport_data: str) -> Passport:
-        tags = re.findall(r"([a-zA-Z]{3}):([^\s\n]+)", passport_data)
-        return Passport(tags={tag[0]: tag[1] for tag in tags})
-
-
-passports = [Passport.get_passport_from_string(passport_data=datum) for datum in data]
-
-print(f"PART ONE: {sum(p.is_valid(validation=Validation.easy_validation) for p in passports)}")
-print(f"PART TWO: {sum(p.is_valid(validation=Validation.advanced_validation) for p in passports)}")
+validated_passports = [AdvancedValidator.validate(passport=passport) for passport in passports]
+print(f"PART TWO: {sum(validated_passports)}")

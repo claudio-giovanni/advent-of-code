@@ -13,16 +13,12 @@ class Coder:
         for step in range(step_size):
             self.initial_code = (self.initial_code * 252533) % 33554393
 
-    def get_value_by_coordinates(self, y: int, x: int) -> int:
-        target_row = y + x - 1
-        for row in count(2, 1):
-            if target_row != row:
-                self._step(step_size=row)
-                continue
-            for column in range(1, row):
-                self._step()
-                if column == x:
-                    return self.initial_code
+    def get_value_by_coordinates(self, row: int, column: int) -> int:
+        target_row = row + column - 1
+        target_row_as_step = sum(range(2, target_row))
+        self._step(step_size=target_row_as_step)
+        self._step(step_size=column)
+        return self.initial_code
 
 
 def get_coordinates_from_data(coordinate_data: str) -> tuple[int, int]:
@@ -33,7 +29,7 @@ def get_coordinates_from_data(coordinate_data: str) -> tuple[int, int]:
 data_row, data_column = get_coordinates_from_data(coordinate_data=data)
 
 coder = Coder(initial_code=20151125)
-part_one_code = coder.get_value_by_coordinates(y=data_row, x=data_column)
+part_one_code = coder.get_value_by_coordinates(row=data_row, column=data_column)
 
 print(f"PART ONE: {part_one_code}")
 print(f"PART TWO: {None}")

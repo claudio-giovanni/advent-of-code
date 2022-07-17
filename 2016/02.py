@@ -29,12 +29,12 @@ class Keypad:
 
     def move(self, directions: list[Direction]):
         for direction in directions:
-            row, column = direction.value
-            new_row = self.row + row
-            new_column = self.column + column
-            if self.is_valid_move(row=new_row, column=new_column):
-                self.row = new_row
-                self.column = new_column
+            row_delta, column_delta = direction.value
+            row = self.row + row_delta
+            column = self.column + column_delta
+            if self.is_valid_move(row=row, column=column):
+                self.row = row
+                self.column = column
 
 
 class BasicKeypad(Keypad):

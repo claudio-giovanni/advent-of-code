@@ -22,8 +22,8 @@ class People:
             current_count = 0
             people_permutation = list(people_permutation) + [people_permutation[0]]
             for person_1, person_2 in pairwise(people_permutation):
-                current_count += person_1.preference_map[person_2.name]
-                current_count += person_2.preference_map[person_1.name]
+                current_count += person_1.preference_map[person_2.word]
+                current_count += person_2.preference_map[person_1.word]
             highest_count = max(current_count, highest_count)
         return highest_count
 

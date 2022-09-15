@@ -1,9 +1,7 @@
 from __future__ import annotations
-from itertools import chain, cycle
 
 import re
-
-from itertools import count
+from itertools import chain, count, cycle
 
 data = open("06.txt").read().strip()
 
@@ -26,7 +24,7 @@ class Memory:
         target_value = self.banks[target_index]
         self.banks[target_index] = 0
         revolving_indexes = chain(range(target_index + 1, len(self.banks)), range(0, target_index + 1))
-        for index, _ in zip(chain(cycle(revolving_indexes)), range(target_value)):
+        for index, _ in zip(cycle(revolving_indexes), range(target_value)):
             self.banks[index] += 1
 
     def reallocate_to_repetition(self) -> None:

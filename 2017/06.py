@@ -9,7 +9,8 @@ data = open("06.txt").read().strip()
 class Memory:
     def __init__(self, banks: list[int]):
         self.banks = banks
-        self.reallocation_count = 0
+        self.repetition_reallocation_count = 0
+        self.repetition_reallocation_chunk_count = 0
 
     @property
     def banks_hash(self) -> int:
@@ -28,13 +29,14 @@ class Memory:
             self.banks[index] += 1
 
     def reallocate_to_repetition(self) -> None:
-        hash_cash = {self.banks_hash}
+        hash_cash = [self.banks_hash]
         for i in count(1):
             self.reallocate()
-            self.reallocation_count = i
+            self.repetition_reallocation_count = i
             if self.banks_hash in hash_cash:
-                return
-            hash_cash.add(self.banks_hash)
+                self.repetition_reallocation_chunk_count = i - hash_cash.index(self.banks_hash)
+                break
+            hash_cash.append(self.banks_hash)
 
     @classmethod
     def from_string(cls, bank_data: str) -> Memory:
@@ -46,5 +48,5 @@ class Memory:
 memory = Memory.from_string(bank_data=data)
 memory.reallocate_to_repetition()
 
-print(f"PART ONE: {memory.reallocation_count}")
-print(f"PART TWO: {None}")
+print(f"PART ONE: {memory.repetition_reallocation_count}")
+print(f"PART TWO: {memory.repetition_reallocation_chunk_count}")

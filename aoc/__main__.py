@@ -1,3 +1,4 @@
+import contextlib
 import os
 from dataclasses import dataclass
 from datetime import datetime
@@ -30,11 +31,9 @@ def _get_template_files() -> list[TemplateFile]:
 
 
 def _create_files(path: Path, content: str):
-    try:
+    with contextlib.suppress(FileExistsError):
         with path.open("x") as file:
             file.write(content)
-    except FileExistsError:
-        pass
 
 
 def main():
@@ -42,7 +41,7 @@ def main():
     template_files = _get_template_files()
     for year, day, file in product(range(START_YEAR, END_YEAR), range(1, 26), template_files):
         year, day = str(year), str(day).zfill(2)
-        file_name = file.word.format(day=day).removesuffix(".jinja")
+        file_name = file.name.format(day=day).removesuffix(".jinja")
         file_path = AOC_FOLDER_PATH.parent.joinpath(year).joinpath(file_name).resolve()
         content = file.template.render(year=year, day=day)
         _create_files(path=file_path, content=content)

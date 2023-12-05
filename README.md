@@ -11,7 +11,7 @@
 - Install pre-commit hooks  
   `pre-commit install`
 - Setup directory structure and files for working on AOC problems  
-  `python aoc`
+  `python -m aoc`
 
 > Below here there be dragons
 

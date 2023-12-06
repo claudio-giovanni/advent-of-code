@@ -18,9 +18,9 @@ class Calibrator:
             yield int(digits[0] + digits[-1])
 
     def get_alpha_numeric_values(self) -> Iterator[str]:
-        for i, instruction in enumerate(self.instructions, start=1):
-            first = re.search(rf"(\d|{NUMERIC_WORDS_PIPE})", instruction)[1]
-            last = re.search(rf"(?s:.*)(\d|{NUMERIC_WORDS_PIPE})", instruction)[1]
+        for instruction in self.instructions:
+            result = re.findall(rf"(?=(\d|{NUMERIC_WORDS_PIPE}))", instruction)
+            first, last = result[0], result[-1]
             yield int(WORDS_VALUES.get(first, first) + WORDS_VALUES.get(last, last))
 
 
